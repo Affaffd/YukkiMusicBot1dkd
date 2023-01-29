@@ -16,6 +16,7 @@ from strings import get_command
 from YukkiMusic import YouTube, app
 from YukkiMusic.core.call import Yukki
 from YukkiMusic.misc import db
+from strings.filters import command
 from YukkiMusic.utils.database import get_loop
 from YukkiMusic.utils.decorators import AdminRightsCheck
 from YukkiMusic.utils.inline.play import (stream_markup,
@@ -29,6 +30,12 @@ SKIP_COMMAND = get_command("SKIP_COMMAND")
 
 @app.on_message(
     filters.command(SKIP_COMMAND)
+    & filters.group
+    & ~filters.edited
+    & ~BANNED_USERS
+)
+@app.on_message(
+    command(["تخطي"])
     & filters.group
     & ~filters.edited
     & ~BANNED_USERS
