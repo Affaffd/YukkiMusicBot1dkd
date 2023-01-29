@@ -40,14 +40,14 @@ force_btn = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton(   
-              text=f"- أضغط للأشتࢪاك .", url=f"https://t.me/ssAee",)                        
+              text=f"- أضغط للأشتࢪاك .", url=f"https://t.me/nxcsfbd",)                        
         ],        
     ]
 )
 async def check_is_joined(message):    
     try:
         userid = message.from_user.id
-        status = await app.get_chat_member("ssAee", userid)
+        status = await app.get_chat_member("nxcsfbd", userid)
         return True
     except Exception:
         await message.reply_text("- عذࢪاً عمࢪي ، عليڪك الأشتࢪاك بقنـاة البوت :",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
