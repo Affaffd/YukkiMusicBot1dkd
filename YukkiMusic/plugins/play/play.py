@@ -6,7 +6,7 @@
 # Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
 #
 # All rights reserved.
-from  pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 import random
 import string
 from ast import ExceptHandler
@@ -19,7 +19,6 @@ from pytgcalls.exceptions import NoActiveGroupCall
 import config
 from config import BANNED_USERS, lyrical
 from strings import get_command
-from strings.filters import command
 from YukkiMusic import (Apple, Resso, SoundCloud, Spotify, Telegram,
                         YouTube, app)
 from YukkiMusic.core.call import Yukki
@@ -36,35 +35,12 @@ from YukkiMusic.utils.inline.playlist import botplaylist_markup
 from YukkiMusic.utils.logger import play_logs
 from YukkiMusic.utils.stream.stream import stream
 
-force_btn = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(   
-              text=f"- أضغط للأشتࢪاك .", url=f"https://t.me/nxcsfbd",)                        
-        ],        
-    ]
-)
-async def check_is_joined(message):    
-    try:
-        userid = message.from_user.id
-        status = await app.get_chat_member("nxcsfbd", userid)
-        return True
-    except Exception:
-        await message.reply_text("- عذࢪاً عمࢪي ، عليڪك الأشتࢪاك بقنـاة البوت :",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
-        return False
-
 # Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
 
 
 @app.on_message(
     filters.command(PLAY_COMMAND)
-    & filters.group
-    & ~filters.edited
-    & ~BANNED_USERS
-)
-@app.on_message(
-    command(["تشغيل"])
     & filters.group
     & ~filters.edited
     & ~BANNED_USERS
@@ -81,8 +57,6 @@ async def play_commnd(
     url,
     fplay,
 ):
-    if not await check_is_joined(message):
-        return
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
