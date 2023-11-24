@@ -1,11 +1,6 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 import random
 import re
@@ -35,7 +30,7 @@ y.verbose = False
 
 
 @app.on_message(
-    filters.command(LYRICS_COMMAND) & ~filters.edited & ~BANNED_USERS
+    filters.command(LYRICS_COMMAND) & ~BANNED_USERS
 )
 @language
 async def lrsearch(client, message: Message, _):

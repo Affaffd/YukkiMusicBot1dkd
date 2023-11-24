@@ -22,13 +22,13 @@ def testspeed(m):
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
-        m = m.edit("Running Download SpeedTest")
+        m = m.edit("تحميل السرعة...")
         test.download()
-        m = m.edit("Running Upload SpeedTest")
+        m = m.edit("تشغيل اختبار سرعة التحميل...")
         test.upload()
         test.results.share()
         result = test.results.dict()
-        m = m.edit("Sharing SpeedTest Results")
+        m = m.edit("جار مشاركة النتائج...")
     except Exception as e:
         return m.edit(e)
     return result
@@ -36,21 +36,21 @@ def testspeed(m):
 
 @app.on_message(filters.command(SPEEDTEST_COMMAND) & SUDOERS)
 async def speedtest_function(client, message):
-    m = await message.reply_text("Running Speed test")
+    m = await message.reply_text("اختبار سرعة التشغيل")
     loop = asyncio.get_event_loop()
     result = await loop.run_in_executor(None, testspeed, m)
-    output = f"""**Speedtest Results**
+    output = f"""**نتائج سرعة النت**
     
-<u>**Client:**</u>
-**__ISP:__** {result['client']['isp']}
-**__Country:__** {result['client']['country']}
+<u>**العميل:**</u>
+**__مزود خدمة الإنترنت :__** {result['client']['isp']}
+**__دولة :__** {result['client']['country']}
   
-<u>**Server:**</u>
-**__Name:__** {result['server']['name']}
-**__Country:__** {result['server']['country']}, {result['server']['cc']}
-**__Sponsor:__** {result['server']['sponsor']}
-**__Latency:__** {result['server']['latency']}  
-**__Ping:__** {result['ping']}"""
+<u>**الخادم :**</u>
+**__اسم :__** {result['server']['name']}
+**__دولة :__** {result['server']['country']}, {result['server']['cc']}
+**__كفيل :__** {result['server']['sponsor']}
+**__وقت الإستجابة :__** {result['server']['latency']}  
+**__بينغ :__** {result['ping']}"""
     msg = await app.send_photo(
         chat_id=message.chat.id, 
         photo=result["share"], 
