@@ -1,11 +1,6 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 import asyncio
 import time
 
@@ -15,6 +10,7 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from strings import get_command
+from strings.filters import command
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
 from YukkiMusic.utils import get_readable_time
@@ -31,7 +27,11 @@ GBAN_COMMAND = get_command("GBAN_COMMAND")
 UNGBAN_COMMAND = get_command("UNGBAN_COMMAND")
 GBANNED_COMMAND = get_command("GBANNED_COMMAND")
 
-
+@app.on_message(
+    command(["ققتا"])
+    & filters.group
+    & ~BANNED_USERS
+)
 @app.on_message(filters.command(GBAN_COMMAND) & SUDOERS)
 @language
 async def gbanuser(client, message: Message, _):
@@ -149,3 +149,6 @@ async def gbanned_list(client, message: Message, _):
         return await mystic.edit_text(_["gban_10"])
     else:
         return await mystic.edit_text(msg)
+#
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G

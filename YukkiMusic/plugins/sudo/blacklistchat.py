@@ -1,16 +1,12 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS
+from strings.filters import command
 from strings import get_command
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
@@ -25,7 +21,11 @@ BLACKLISTCHAT_COMMAND = get_command("BLACKLISTCHAT_COMMAND")
 WHITELISTCHAT_COMMAND = get_command("WHITELISTCHAT_COMMAND")
 BLACKLISTEDCHAT_COMMAND = get_command("BLACKLISTEDCHAT_COMMAND")
 
-
+@app.on_message(
+    command(["منع مجموعة"])
+    & filters.group
+    & ~BANNED_USERS
+)
 @app.on_message(filters.command(BLACKLISTCHAT_COMMAND) & SUDOERS)
 @language
 async def blacklist_chat_func(client, message: Message, _):

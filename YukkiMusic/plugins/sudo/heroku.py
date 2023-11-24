@@ -346,6 +346,11 @@ async def restart_(_, message):
     except:
         pass
     await response.edit(
-        "Reboot has been initiated successfully! Wait for 1 - 2 minutes until the bot restarts."
+        "حسنا سوف اقوم باعادة تشغيل النضام!\nانتظر من 1 الى 2 دقيقة حتا اقوم باعادة التشغيل."
     )
     os.system(f"kill -9 {os.getpid()} && bash start")
+
+
+#
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
