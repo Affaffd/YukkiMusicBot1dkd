@@ -1,11 +1,6 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 from pyrogram import filters
 from pyrogram.types import Message
@@ -28,7 +23,6 @@ AUTHUSERS_COMMAND = get_command("AUTHUSERS_COMMAND")
 @app.on_message(
     filters.command(AUTH_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @AdminActual
@@ -95,7 +89,6 @@ async def auth(client, message: Message, _):
 @app.on_message(
     filters.command(UNAUTH_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @AdminActual
@@ -133,7 +126,6 @@ async def unauthusers(client, message: Message, _):
 @app.on_message(
     filters.command(AUTHUSERS_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @language
