@@ -1,5 +1,11 @@
-#تعديل وتحديث مطور سورس ايثون
-# copyright @EITHON1 @V_V_G
+#
+# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
+#
+# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
+#
+# All rights reserved.
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import random
 import string
@@ -30,39 +36,13 @@ from YukkiMusic.utils.inline.play import (livestream_markup,
 from YukkiMusic.utils.inline.playlist import botplaylist_markup
 from YukkiMusic.utils.logger import play_logs
 from YukkiMusic.utils.stream.stream import stream
-
-
-force_btn = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(   
-              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
-        ],        
-    ]
-)
-async def check_is_joined(message):    
-    try:
-        userid = message.from_user.id
-        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
-        return True
-    except Exception:
-        await message.reply_text("**◇︰ عذرا، عليك الانضمام الى قناة البوت أولاً :**",reply_markup=force_btn)
-        return False
       
-#تعديل وتحديث مطور سورس ايثون
-# copyright @EITHON1 @V_V_G
+# Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
 
-#تعديل وتحديث مطور سورس ايثون
-# copyright @EITHON1 @V_V_G
 @app.on_message(
-    command(["شغل","تشغيل"])
-    & filters.group
-    & ~BANNED_USERS
-)
-@app.on_message(
-    filters.command(PLAY_COMMAND)
-    & filters.group
+    command(["قناه","قناة","شغل","تشغيل"])
+    & filters.channel
     & ~BANNED_USERS
 )
 @PlayWrapper
@@ -77,8 +57,6 @@ async def play_commnd(
     url,
     fplay,
 ):
-    if not await check_is_joined(message):
-        return
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
@@ -86,8 +64,8 @@ async def play_commnd(
     slider = None
     plist_type = None
     spotify = None
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
+    user_id = None
+    user_name = None
     audio_telegram = (
         (
             message.reply_to_message.audio

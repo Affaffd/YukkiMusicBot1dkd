@@ -1,29 +1,26 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
+from YukkiMusic.plugins.play.filters import command
 from pyrogram import filters
 from pyrogram.types import Message
-
+from pyrogram.enums import ChatType
 from config import BANNED_USERS
 from strings import get_command
 from YukkiMusic import app
 from YukkiMusic.utils.database import set_cmode
 from YukkiMusic.utils.decorators.admins import AdminActual
 
-### Multi-Lang Commands
+#
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 CHANNELPLAY_COMMAND = get_command("CHANNELPLAY_COMMAND")
 
 
 @app.on_message(
-    filters.command(CHANNELPLAY_COMMAND)
+    command(CHANNELPLAY_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @AdminActual
@@ -55,16 +52,16 @@ async def playmode_(client, message: Message, _):
             chat = await app.get_chat(query)
         except:
             return await message.reply_text(_["cplay_4"])
-        if chat.type != "channel":
+        if chat.type != ChatType.CHANNEL:
             return await message.reply_text(_["cplay_5"])
         try:
             admins = await app.get_chat_members(
-                chat.id, filter="administrators"
+                chat.id, filter=ChatMembersFilter.ADMINISTRATORS
             )
         except:
             return await message.reply_text(_["cplay_4"])
         for users in admins:
-            if users.status == "creator":
+            if users.status == ChatMemberStatus.OWNER:
                 creatorusername = users.user.username
                 creatorid = users.user.id
         if creatorid != message.from_user.id:
