@@ -1,15 +1,11 @@
-#
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 import asyncio
 
 from pyrogram import filters
+from pyrogram.enums import ChatType
 from pyrogram.types import (InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
 from youtubesearchpython.__future__ import VideosSearch
@@ -38,7 +34,6 @@ loop = asyncio.get_running_loop()
 @app.on_message(
     filters.command(get_command("START_COMMAND"))
     & filters.private
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @LanguageStart
@@ -131,7 +126,7 @@ async def start_comm(client, message: Message, _):
         if name[0:3] == "del":
             await del_plist_msg(client=client, message=message, _=_)
         if name[0:3] == "inf":
-            m = await message.reply_text("🔎 Fetching Info!")
+            m = await message.reply_text("🔎 حسنا جاري البحث!")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
@@ -147,26 +142,26 @@ async def start_comm(client, message: Message, _):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = f"""
-🔍__**Video Track Information**__
+**‹ معلومات الفيديو ⤈**
 
-❇️**Title:** {title}
+**اسم الفيديو :** ‹ {title} ›
 
-⏳**Duration:** {duration} Mins
-👀**Views:** `{views}`
-⏰**Published Time:** {published}
-🎥**Channel Name:** {channel}
-📎**Channel Link:** [Visit From Here]({channellink})
-🔗**Video Link:** [Link]({link})
+**مده الفيديو :** ‹ {duration} Mins ›
+**المشاهدات :** ‹ {views} ›
+**وقت النشر :** ‹ {published} ›
+**اسم القناة :** ‹ {channel} ›
+**رابط القناة :** [‹ اضغط هنا ›]({channellink})
+**رابط الفيديو :** [‹ اضغط هنا ›]({link})
 
-⚡️ __Searched Powered By {config.MUSIC_BOT_NAME}__"""
+‹ تم البحث بواسطة : {config.MUSIC_BOT_NAME} ›"""
             key = InlineKeyboardMarkup(
                 [
                     [
                         InlineKeyboardButton(
-                            text="🎥 Watch ", url=f"{link}"
+                            text="‹ مشاهده الفيديو › ", url=f"{link}"
                         ),
                         InlineKeyboardButton(
-                            text="🔄 Close", callback_data="close"
+                            text="‹ اغلاق القائمه ›", callback_data="close"
                         ),
                     ],
                 ]
@@ -217,14 +212,14 @@ async def start_comm(client, message: Message, _):
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOG_GROUP_ID,
-                f"{message.from_user.mention} has just started Bot.\n\n**USER ID:** {sender_id}\n**USER NAME:** {sender_name}",
+                f"{message.from_user.mention} هاذة دزالي ستارت.\n\n**ايدية :** {sender_id}\n**اسمة :** {sender_name}",
             )
 
-
+#تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 @app.on_message(
     filters.command(get_command("START_COMMAND"))
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @LanguageStart
@@ -258,7 +253,7 @@ async def welcome(client, message: Message):
             _ = get_string(language)
             if member.id == app.id:
                 chat_type = message.chat.type
-                if chat_type != "supergroup":
+                if chat_type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_6"])
                     return await app.leave_chat(message.chat.id)
                 if chat_id in await blacklisted_chats():

@@ -1,13 +1,9 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 from pyrogram import filters
+from pyrogram.enums import ChatType
 from pyrogram.errors import MessageNotModified
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
@@ -15,6 +11,7 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
 from config import (BANNED_USERS, CLEANMODE_DELETE_MINS,
                     MUSIC_BOT_NAME, OWNER_ID)
 from strings import get_command
+from strings.filters import command
 from YukkiMusic import app
 from YukkiMusic.utils.database import (add_nonadmin_chat,
                                        cleanmode_off, cleanmode_on,
@@ -40,15 +37,18 @@ from YukkiMusic.utils.inline.settings import (
     cleanmode_settings_markup, playmode_users_markup, setting_markup,
     video_quality_markup)
 from YukkiMusic.utils.inline.start import private_panel
-
-### Command
+#تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")
 
-
+@app.on_message(
+    command(["الاعدادات"])
+    & filters.group
+    & ~BANNED_USERS
+)
 @app.on_message(
     filters.command(SETTINGS_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @language
@@ -90,7 +90,7 @@ async def settings_back_markup(
         await CallbackQuery.answer()
     except:
         pass
-    if CallbackQuery.message.chat.type == "private":
+    if CallbackQuery.message.chat.type == ChatType.PRIVATE:
         try:
             await app.resolve_peer(OWNER_ID[0])
             OWNER = OWNER_ID[0]

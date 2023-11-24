@@ -1,19 +1,14 @@
 #
-# Copyright (C) 2021-2022 by TeamYukki@Github, < https://github.com/TeamYukki >.
-#
-# This file is part of < https://github.com/TeamYukki/YukkiMusicBot > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/TeamYukki/YukkiMusicBot/blob/master/LICENSE >
-#
-# All rights reserved.
-
+# Copyright (C) 2021-2022 by #تعديل وتحديث مطور سورس ايثون
+# copyright @EITHON1 @V_V_G
 
 from typing import Union
 
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
-
-from config import BANNED_USERS
+import config
+from strings.filters import command
+from config import BANNED_USERS, START_IMG_URL
 from strings import get_command, get_string, helpers
 from YukkiMusic import app
 from YukkiMusic.misc import SUDOERS
@@ -27,11 +22,14 @@ from YukkiMusic.utils.inline.help import (help_back_markup,
 ### Command
 HELP_COMMAND = get_command("HELP_COMMAND")
 
-
+@app.on_message(
+    command(["مساعدة","مساعده"])
+    & filters.group
+    & ~BANNED_USERS
+)
 @app.on_message(
     filters.command(HELP_COMMAND)
     & filters.private
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @app.on_callback_query(
@@ -51,8 +49,7 @@ async def helper_private(
         _ = get_string(language)
         keyboard = help_pannel(_, True)
         if update.message.photo:
-            await update.message.delete()
-            await update.message.reply_text(
+            await update.edit_message_text(
                 _["help_1"], reply_markup=keyboard
             )
         else:
@@ -69,22 +66,23 @@ async def helper_private(
         language = await get_lang(chat_id)
         _ = get_string(language)
         keyboard = help_pannel(_)
-        await update.reply_text(_["help_1"], reply_markup=keyboard)
+        await update.reply_photo(
+          photo=config.START_IMG_URL,
+          caption=_["help_1"], reply_markup=keyboard)
 
 
 @app.on_message(
     filters.command(HELP_COMMAND)
     & filters.group
-    & ~filters.edited
     & ~BANNED_USERS
 )
 @LanguageStart
 async def help_com_group(client, message: Message, _):
     keyboard = private_help_panel(_)
-    await message.reply_text(
-        _["help_2"], reply_markup=InlineKeyboardMarkup(keyboard)
+    await message.reply_photo(
+      photo=config.START_IMG_URL,
+      caption=_["help_2"], reply_markup=InlineKeyboardMarkup(keyboard)
     )
-
 
 @app.on_callback_query(filters.regex("help_callback") & ~BANNED_USERS)
 @languageCB
@@ -95,7 +93,7 @@ async def helper_cb(client, CallbackQuery, _):
     if cb == "hb5":
         if CallbackQuery.from_user.id not in SUDOERS:
             return await CallbackQuery.answer(
-                "Only for Sudo Users", show_alert=True
+                "هذا الأمر فقط للمطورين !!", show_alert=True
             )
         else:
             await CallbackQuery.edit_message_text(
@@ -122,3 +120,11 @@ async def helper_cb(client, CallbackQuery, _):
         await CallbackQuery.edit_message_text(
             helpers.HELP_4, reply_markup=keyboard
         )
+    elif cb == "hb6":
+        await CallbackQuery.edit_message_text(
+            helpers.HELP_6, reply_markup=keyboard
+        )
+    elif cb == "hb8":
+        await CallbackQuery.edit_message_text(
+            helpers.HELP_7, reply_markup=keyboard
+        ) 
